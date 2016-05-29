@@ -52,8 +52,6 @@ namespace Soviet_Russia {
 
             Startable = false;
 
-            ssw = new ShapeSelectorWindow();
-
         }
 
         #region event handlers for buttons
@@ -63,16 +61,15 @@ namespace Soviet_Russia {
         }       
 
         private void shapesButton_Click(object sender, RoutedEventArgs e) {
+            ssw = new ShapeSelectorWindow();
             ssw.ShowDialog();
-
-            if(ssw.ShapesMadeCount == 4)
-                Tetromino.GenerateShapes(ssw.ExportSelection());
-
+            ssw.Close();
+            if (ssw.ShapesMadeCount == 4) Startable = true;
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e) {
             Close();
-            ssw.Close();
+            //ssw.Close();
         }
 
         #endregion

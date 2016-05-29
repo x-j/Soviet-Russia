@@ -19,6 +19,7 @@ namespace Soviet_Russia {
         static List<Tuple<List<int[]>, Brush>> POSSIBLE_TETROMINOS = new List<Tuple<List<int[]>, Brush>>();
 
         internal static void GenerateShapes(List<Tuple<List<int[]>, Brush>> list) {
+            MessageBox.Show(list.ToString());
             POSSIBLE_TETROMINOS = list;
         }
 

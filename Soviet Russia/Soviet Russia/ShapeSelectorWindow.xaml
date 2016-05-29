@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Soviet_Russia"
-        mc:Ignorable="d" Height="510" Width="610" ResizeMode="NoResize" Background="{DynamicResource sovietRedBackground}" Foreground="{DynamicResource sovietYellowForeground}" FontFamily="Times New Roman" FontSize="14" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="510" Width="610" ResizeMode="NoResize" Background="DarkRed" Foreground="{DynamicResource sovietYellowForeground}" FontFamily="Times New Roman" FontSize="14" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ObjectDataProvider 
@@ -12,10 +12,13 @@
     MethodName="GetProperties" 
     x:Key="colorPropertiesOdp" />
 
-        <Style x:Key="toggleButtonStyle">
+        <Style x:Key="myRectangleStyle">
             <Style.Triggers>
-                <Trigger Property="ToggleButton.IsChecked" Value="True">
-                    <Setter Property="ToggleButton.Background" Value="Blue" />
+                <Trigger Property="Rectangle.Tag" Value="True">
+                    <Setter Property="Rectangle.Fill" Value="White" />
+                </Trigger>
+                <Trigger Property="Rectangle.Tag" Value="False">
+                    <Setter Property="Rectangle.Fill" Value="DarkRed" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -93,7 +96,7 @@
         <Label x:Name="label_Copy2" Content="Colour:" HorizontalAlignment="Left" Margin="464,261,-9,0" VerticalAlignment="Top" Foreground="{DynamicResource sovietYellowForeground}"/>
         <ComboBox x:Name="seComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Width="80" Margin="492,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+          SelectedValuePath="Name" Width="80" Margin="492,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -107,7 +110,7 @@
         </ComboBox>
         <ComboBox x:Name="neComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Margin="492,111,10,285" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left">
+          SelectedValuePath="Name" Margin="492,111,10,285" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -121,7 +124,7 @@
         </ComboBox>
         <ComboBox x:Name="swComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Margin="193,292,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left">
+          SelectedValuePath="Name" Margin="193,292,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -135,7 +138,7 @@
         </ComboBox>
         <ComboBox x:Name="nwComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Margin="193,106,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left">
+          SelectedValuePath="Name" Margin="193,106,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -148,6 +151,5 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
         <Button x:Name="getOnWithItButton" Content="Get on with it!" HorizontalAlignment="Center" Height="25" Margin="0,0,0,15" VerticalAlignment="Bottom" Width="300" Background="#FF9B1E1E" Foreground="{DynamicResource sovietYellowForeground}" BorderThickness="2,1" BorderBrush="#FF343434" IsDefault="True" IsEnabled="{Binding Leavable, ElementName=window}" Click="getOnWithItButton_Click"/>
-        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="43" Margin="218,213,0,0" Stroke="Black" VerticalAlignment="Top" Width="71"/>
     </Grid>
 </Window>
