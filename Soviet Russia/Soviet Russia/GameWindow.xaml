@@ -1,16 +1,14 @@
-﻿<Window x:Class="Soviet_Russia.MainWindow"
+﻿<Window x:Class="Soviet_Russia.GameWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Soviet_Russia"
         mc:Ignorable="d"
-        Title="T E T R I S" Height="625.8" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="Times New Roman" Background="{x:Null}">
-    <Window.Resources>
-        <Image x:Key="image" Source="huj.png" />
-    </Window.Resources>
-        
-    <Grid Background="#FFBB0F0F">
+        Title="T E T R I S" Height="625.8" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="Times New Roman" Background="{DynamicResource sovietRedBackground}" KeyDown="Window_KeyDown">
+
+
+    <Grid Background="{DynamicResource sovietRedBackground}">
         <Grid x:Name="gameGrid" Margin="10,96,10,10" Background="#FFF6FF9B" ShowGridLines="True">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -53,9 +51,9 @@
                 <MenuItem Header="Exit" Click="quitButton_Click"/>
             </MenuItem>
         </Menu>
-        <Rectangle x:Name="image" HorizontalAlignment="Center" Height="66" Margin="65,25,279,0" VerticalAlignment="Top" Width="200">
+        <Rectangle x:Name="image" HorizontalAlignment="Center" Height="66" Margin="0,25,0,0" VerticalAlignment="Top" Width="200">
             <Rectangle.Fill>
-                <ImageBrush ImageSource="huj.jpg"/>
+                <ImageBrush ImageSource="tetris.jpg"/>
             </Rectangle.Fill>
 
         </Rectangle>

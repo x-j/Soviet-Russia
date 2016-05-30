@@ -30,20 +30,21 @@ namespace Soviet_Russia {
 
         //Properties:
         private bool _startable;
-        public  bool Startable {
-            get {
+        public bool Startable
+        {
+            get
+            {
                 return _startable;
             }
-            set {
+            set
+            {
                 _startable = value;
                 OnPropertyChanged("Startable");
             }
         }
 
+        ShapeSelectorWindow ssw = new ShapeSelectorWindow();
 
-        ShapeSelectorWindow ssw;
-
-       
         public MainMenuWindow() {
 
             InitializeComponent();
@@ -57,19 +58,31 @@ namespace Soviet_Russia {
         #region event handlers for buttons
 
         private void startButton_Click(object sender, RoutedEventArgs e) {
-
-        }       
+            GameWindow gw = new GameWindow();
+            gw.Show();
+            ssw.Close();
+            Close();
+        }
 
         private void shapesButton_Click(object sender, RoutedEventArgs e) {
+
+            if (ssw == null) MessageBox.Show("????");
+
             ssw = new ShapeSelectorWindow();
             ssw.ShowDialog();
             ssw.Close();
-            if (ssw.ShapesMadeCount == 4) Startable = true;
+
+            //MessageBox.Show("Something wrong has happened...");
+
+            if (ssw.ShapesMadeCount == 4) {
+                Startable = true;
+                Tetromino.GenerateShapes(ssw.ExportSelection());
+            }
         }
 
         private void exitButton_Click(object sender, RoutedEventArgs e) {
             Close();
-            //ssw.Close();
+            ssw.Close();
         }
 
         #endregion

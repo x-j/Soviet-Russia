@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Soviet_Russia"
-        mc:Ignorable="d" Height="510" Width="610" ResizeMode="NoResize" Background="DarkRed" Foreground="{DynamicResource sovietYellowForeground}" FontFamily="Times New Roman" FontSize="14" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="510" Width="610" ResizeMode="NoResize" Background="{DynamicResource sovietRedBackground}" Foreground="{DynamicResource sovietYellowForeground}" FontSize="14" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ObjectDataProvider 
@@ -96,7 +96,7 @@
         <Label x:Name="label_Copy2" Content="Colour:" HorizontalAlignment="Left" Margin="464,261,-9,0" VerticalAlignment="Top" Foreground="{DynamicResource sovietYellowForeground}"/>
         <ComboBox x:Name="seComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Width="80" Margin="492,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
+          SelectedValuePath="Name" Width="80" Margin="492,292,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged" Tag="2">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -110,7 +110,7 @@
         </ComboBox>
         <ComboBox x:Name="neComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Margin="492,111,10,285" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
+          SelectedValuePath="Name" Margin="492,111,10,285" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged" Tag="1">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -124,7 +124,7 @@
         </ComboBox>
         <ComboBox x:Name="swComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Margin="193,292,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
+          SelectedValuePath="Name" Margin="193,292,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged" Tag="3">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
@@ -138,7 +138,7 @@
         </ComboBox>
         <ComboBox x:Name="nwComboBox"
           ItemsSource="{Binding Source={StaticResource colorPropertiesOdp}}"
-          SelectedValuePath="Name" Margin="193,106,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged">
+          SelectedValuePath="Name" Margin="193,106,0,0" Width="80" VerticalAlignment="Top" HorizontalAlignment="Left" SelectionChanged="comboBox_SelectionChanged" Tag="0">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Height="15" Margin="0,0,0,2">
