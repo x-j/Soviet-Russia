@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Soviet_Russia"
-        mc:Ignorable="d" Height="510" Width="610" ResizeMode="NoResize" Background="{DynamicResource sovietRedBackground}" Foreground="{DynamicResource sovietYellowForeground}" FontSize="14" WindowStartupLocation="CenterScreen">
+        mc:Ignorable="d" Height="510" Width="610" ResizeMode="NoResize" Background="{StaticResource sovietRedBackground}" Foreground="{StaticResource sovietYellowForeground}" FontSize="14">
 
     <Window.Resources>
         <ObjectDataProvider 

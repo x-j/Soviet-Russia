@@ -43,11 +43,13 @@ namespace Soviet_Russia {
             }
         }
 
-        ShapeSelectorWindow ssw = new ShapeSelectorWindow();
+        ShapeSelectorWindow ssw;
 
         public MainMenuWindow() {
 
             InitializeComponent();
+
+            ssw = new ShapeSelectorWindow(); 
 
             DataContext = this;
 
@@ -67,13 +69,15 @@ namespace Soviet_Russia {
         private void shapesButton_Click(object sender, RoutedEventArgs e) {
 
             if (ssw == null) MessageBox.Show("????");
-
-            ssw = new ShapeSelectorWindow();
-            ssw.ShowDialog();
-            ssw.Close();
-
-            //MessageBox.Show("Something wrong has happened...");
-
+            this.RemoveVisualChild(ssw);
+            ssw = null;
+            if (Tetromino.POSSIBLE_TETROMINOS.Count == 4) {
+                this.RemoveVisualChild(ssw);
+                ssw = new ShapeSelectorWindow(Tetromino.POSSIBLE_TETROMINOS);
+            } else ssw = new ShapeSelectorWindow();
+            this.RemoveVisualChild(ssw);
+            ssw.ShowDialog();            
+            //here be dragons
             if (ssw.ShapesMadeCount == 4) {
                 Startable = true;
                 Tetromino.GenerateShapes(ssw.ExportSelection());
@@ -93,6 +97,7 @@ namespace Soviet_Russia {
         protected void OnPropertyChanged(string name) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+
         #endregion
 
     }

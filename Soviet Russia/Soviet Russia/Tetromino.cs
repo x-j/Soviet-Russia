@@ -18,6 +18,7 @@ namespace Soviet_Russia {
         public List<Rectangle> squares;
 
         public static List<Tuple<List<int[]>, Brush>> POSSIBLE_TETROMINOS = new List<Tuple<List<int[]>, Brush>>();
+        static Random rand = new Random();
 
         internal static void GenerateShapes(List<Tuple<List<int[]>, Brush>> list) {
             POSSIBLE_TETROMINOS = list;
@@ -26,9 +27,8 @@ namespace Soviet_Russia {
         public Tetromino(Grid grid, int column) {
 
             squares = new List<Rectangle>();
-
-            Random r = new Random();
-            int chosenShape = r.Next(0, 3);
+            
+            int chosenShape = rand.Next(0, 4);
             Brush color = POSSIBLE_TETROMINOS[chosenShape].Item2;
 
             int topmost = POSSIBLE_TETROMINOS.Min(tuple => tuple.Item1.Min(cord => cord[0]));

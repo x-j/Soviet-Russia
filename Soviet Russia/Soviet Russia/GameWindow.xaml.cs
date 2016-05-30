@@ -20,7 +20,7 @@ namespace Soviet_Russia {
     /// </summary>
     public partial class GameWindow : Window {
 
-        private const int GRID_SIZE = 15;
+        private const int COLUMN_COUNT = 15;
 
         DispatcherTimer timer;
 
@@ -29,21 +29,28 @@ namespace Soviet_Russia {
 
         public GameWindow() {
             InitializeComponent();
-       
+
+            this.Closed += GameWindow_Closed;
 
             squares = new List<Rectangle>();
 
             timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(9500);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             timer.Tick += Timer_Tick;
 
             Random rand = new Random();
 
-            currentTetro = new Tetromino(gameGrid, rand.Next(0, GRID_SIZE - 1));
+            currentTetro = new Tetromino(gameGrid, rand.Next(0, COLUMN_COUNT - 1));
 
             timer.Start();
 
 
+
+        }
+
+        private void GameWindow_Closed(object sender, EventArgs e) {
+
+            Environment.Exit(0);
 
         }
 
@@ -70,7 +77,7 @@ namespace Soviet_Russia {
                 foreach (var sq in currentTetro.squares) squares.Add(sq);
                 Random rand = new Random();
 
-                Tetromino t = new Tetromino(gameGrid, rand.Next(0, GRID_SIZE - 4));
+                Tetromino t = new Tetromino(gameGrid, rand.Next(0, ROW_COUNT - 4));
                 currentTetro = t;
 
                 ClearFilledRows();
@@ -80,22 +87,34 @@ namespace Soviet_Russia {
         }
 
         private void ClearFilledRows() {
+            
+            for (int i = ROW_COUNT - 1; i >= 0; i--) {
 
-            for (int i = GRID_SIZE - 1; i >= 0; i--) {
-                if(squares.Count(rect => Grid.GetRow(rect) == i) == GRID_SIZE) {
-                    List<Rectangle> row = squares.FindAll(rect => Grid.GetRow(rect) == i);
+                List<Rectangle> row = squares.FindAll(rect => Grid.GetRow(rect) == i);
+                if (row.Count == COLUMN_COUNT) {
                     foreach (var sq in row) {
                         squares.Remove(sq);
                         gameGrid.Children.Remove(sq);
                     }
+
+                    for (int j = i - 1; j >= 0; j--) {
+                        List<Rectangle> aboveRow = squares.FindAll(rect => Grid.GetRow(rect) == j);
+                        foreach (var sq in aboveRow) {
+                            SetLocation(sq, Grid.GetRow(sq) + 1, Grid.GetColumn(sq));
+                        }
+                    }
+
                 }
+
+
             }
 
         }
 
+
         private bool CheckCollisionDown() {
 
-            if (currentTetro.bottomBound == GRID_SIZE - 1) {
+            if (currentTetro.bottomBound == ROW_COUNT - 1) {
                 //MessageBox.Show("bottom???");
                 return true;
 
@@ -121,18 +140,19 @@ namespace Soviet_Russia {
             Grid.SetColumn(r, j);
             Grid.SetRow(r, i);
         }
-
+        private const int ROW_COUNT = COLUMN_COUNT + 3;
         private void quitButton_Click(object sender, RoutedEventArgs e) {
             timer.Stop();
             Close();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e) {
-
+            timer.Stop();
             ShapeSelectorWindow ssw = new ShapeSelectorWindow(Tetromino.POSSIBLE_TETROMINOS);
             ssw.ShowDialog();
             ssw.Close();
-
+            Tetromino.GenerateShapes(ssw.ExportSelection());
+            timer.Start();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e) {
@@ -151,6 +171,9 @@ namespace Soviet_Russia {
                     MessageBox.Show("Oh well done you pressed the spacebar");
                     break;
 
+                case Key.Down:
+                    MoveDown();
+                    break;
             }
 
         }
@@ -163,12 +186,12 @@ namespace Soviet_Russia {
                     SetLocation(sq, i, j + 1);
                     gameGrid.InvalidateArrange();
                 }
-                currentTetro.rightBound = currentTetro.squares.Max(r => Grid.GetColumn(r));
             }
+            currentTetro.rightBound = currentTetro.squares.Max(r => Grid.GetColumn(r));
         }
 
         private bool CheckCollisionRight() {
-            if (currentTetro.rightBound == GRID_SIZE - 1)
+            if (currentTetro.rightBound == COLUMN_COUNT - 1)
                 return true;
             foreach (var sq in squares) {
 
@@ -186,6 +209,8 @@ namespace Soviet_Russia {
             return false;
         }
 
+        
+
         private void MoveLeft() {
             if (!CheckCollisionLeft()) {
                 foreach (var sq in currentTetro.squares) {
@@ -194,9 +219,9 @@ namespace Soviet_Russia {
                     SetLocation(sq, i, j - 1);
                 }
                 gameGrid.InvalidateArrange();
-                currentTetro.leftBound = currentTetro.squares.Min(r => Grid.GetColumn(r));
 
             }
+            currentTetro.leftBound = currentTetro.squares.Min(r => Grid.GetColumn(r));
         }
 
         private bool CheckCollisionLeft() {
@@ -217,5 +242,12 @@ namespace Soviet_Russia {
 
             return false;
         }
+
+        
+
     }
+
+
+
+    
 }

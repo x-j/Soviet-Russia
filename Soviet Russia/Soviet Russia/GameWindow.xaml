@@ -7,10 +7,12 @@
         mc:Ignorable="d"
         Title="T E T R I S" Height="625.8" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" FontFamily="Times New Roman" Background="{DynamicResource sovietRedBackground}" KeyDown="Window_KeyDown">
 
-
     <Grid Background="{DynamicResource sovietRedBackground}">
         <Grid x:Name="gameGrid" Margin="10,96,10,10" Background="#FFF6FF9B" ShowGridLines="True">
             <Grid.RowDefinitions>
+                <RowDefinition Height="0*"/>
+                <RowDefinition Height="0*"/>
+                <RowDefinition Height="0*"/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>

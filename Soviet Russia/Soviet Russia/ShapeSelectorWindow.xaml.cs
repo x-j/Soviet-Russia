@@ -18,50 +18,22 @@ namespace Soviet_Russia {
     /// <summary>
     /// Interaction logic for ShapeSelectorWindow.xaml
     /// </summary>
-    public partial class ShapeSelectorWindow : Window, INotifyPropertyChanged {
+    public partial class ShapeSelectorWindow : Window {
 
-        //Properties
-        private bool _finishable;
-        public bool Finishable
-        {
-            get
-            {
-                return _finishable;
-            }
-            set
-            {
-                _finishable = value;
-                OnPropertyChanged("Finishable");
-            }
-        }
 
-        private int _gridSize;
-        public int GridSize
-        {
-            get
-            {
-                return _gridSize;
-            }
-            set
-            {
-                _gridSize = value;
-                OnPropertyChanged("GridSize");
-            }
-        }
 
         private int _shapesMadeCount;
-        public int ShapesMadeCount
-        {
-            get
-            {
+        public int ShapesMadeCount {
+            get {
                 return _shapesMadeCount;
             }
-            private set
-            {
+            private set {
                 _shapesMadeCount = value;
-                OnPropertyChanged("ShapesMadeCount");
+                //OnPropertyChanged("ShapesMadeCount");
             }
         }
+
+        public byte GridSize { get; private set; }
 
         //Constants
         private const byte DEFAULT_GRID_SIZE = 5;   //BETTER NOT TOUCH THIS
@@ -73,13 +45,24 @@ namespace Soviet_Russia {
         public ShapeSelectorWindow() {
             InitializeComponent();
 
-           GridSize = DEFAULT_GRID_SIZE;
+            GridSize = DEFAULT_GRID_SIZE;
             SOVIET_RED = (Brush)FindResource("sovietRedBackground");
 
             PopulateLists();
 
             MakeRectangles();
 
+            this.Closing += ShapeSelectorWindow_Closing;
+            this.Closed += ShapeSelectorWindow_Closed;
+
+        }
+
+        private void ShapeSelectorWindow_Closed(object sender, EventArgs e) {
+            Close();
+        }
+
+        private void ShapeSelectorWindow_Closing(object sender, CancelEventArgs e) {
+            e.Cancel = false;
         }
 
         public ShapeSelectorWindow(List<Tuple<List<int[]>, Brush>> pOSSIBLE_TETROMINOS) {
@@ -92,21 +75,35 @@ namespace Soviet_Russia {
             SOVIET_RED = (Brush)FindResource("sovietRedBackground");
 
             PopulateLists();
+            MakeRectangles();
 
             if (pOSSIBLE_TETROMINOS.Count == 4) {
 
-                for (int i = 0; i < 4; i++) {   //
+                for (int i = 0; i < 4; i++) {   //this is a comment
                     foreach (var coords in pOSSIBLE_TETROMINOS[i].Item1) {
                         Rectangle r = FindSquare(controls[i].Item3, coords);
-                        if (pOSSIBLE_TETROMINOS[i].Item2 != null)
+                        if (pOSSIBLE_TETROMINOS[i].Item2 != null) {
                             r.Fill = pOSSIBLE_TETROMINOS[i].Item2;
-                        else r.Fill = Brushes.White;
+                            r.Tag = true;
+                        } else r.Fill = Brushes.White;
                     }
+                    controls[i].Item2.SelectedIndex = findColorInCB(controls[i].Item2, pOSSIBLE_TETROMINOS[i].Item2);
                 }
             }
 
-            MakeRectangles();
 
+        }
+
+        private int findColorInCB(ComboBox item21, Brush item22) {
+
+            for (int i = 0; i < item21.Items.Count; i++) {
+                var item = item21.Items[i];
+                Brush b = (Brush)new BrushConverter().ConvertFromString(item.ToString().Split(' ')[1]);
+
+                if (b.Equals(item22)) return i;
+            }
+
+            return 0;
         }
 
         private Rectangle FindSquare(List<Rectangle> item3, int[] coords) {
@@ -150,18 +147,6 @@ namespace Soviet_Russia {
                         b.MouseLeftButtonDown += B_MouseLeftButtonDown;
                         b.Fill = SOVIET_RED;
                         b.ToolTip = tuple.Item2;    //i am very smart therefore i hid the respective combobox in the tooltip XDDD
-                        //b.Style = (Style)FindResource("myRectangleStyle");
-
-                        //the binding below is literally Hitler
-                        /*
-                        Binding rectangleColorBinding = new Binding();
-                        rectangleColorBinding.Source = tuple.Item2;
-                        rectangleColorBinding.Path = new PropertyPath("SelectedItem");
-                        rectangleColorBinding.ConverterParameter = b.IsChecked;
-                        rectangleColorBinding.Converter = new SelectedItemToBrushConverter();
-
-                        BindingOperations.SetBinding(b, Rectangle.BackgroundProperty, rectangleColorBinding);*/
-
 
                         tuple.Item1.Children.Add(b);
                         Grid.SetRow(b, i);
@@ -261,14 +246,6 @@ namespace Soviet_Russia {
             if (CountShapesMade() != 4) MessageBox.Show("Comrade, please make four shapes first!");
             else Close();
         }
-
-        #region Property change handling
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void OnPropertyChanged(string name) {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-        #endregion
 
 
 

@@ -58,7 +58,6 @@
     <Compile Include="GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SelectedItemToBrushConverter.cs" />
     <Compile Include="ShapeSelectorWindow.xaml.cs">
       <DependentUpon>ShapeSelectorWindow.xaml</DependentUpon>
     </Compile>
